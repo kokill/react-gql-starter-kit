@@ -1,0 +1,31 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            ">1%",
+            "last 4 versions",
+            "Firefox ESR",
+            "not ie < 9"
+          ],
+          "forceAllTransforms": false
+        },
+        "modules": false,
+        "useBuiltIns": false,
+        "debug": false
+      }
+    ],
+    "@babel/preset-stage-2",
+    [
+      "@babel/preset-react",
+      {
+        "development": true
+      }
+    ]
+  ],
+  "plugins": [
+    "react-hot-loader/babel"
+  ]
+}
