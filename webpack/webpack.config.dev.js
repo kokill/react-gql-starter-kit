@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -12,29 +13,6 @@ module.exports = {
         test: /\.jsx?$/,
         use: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: require.resolve('style-loader'),
-          },
-          {
-            loader: require.resolve('css-loader'),
-            options: {
-              importLoaders: 1,
-              minimize: true,
-              sourceMap: true,
-            },
-          },
-          {
-            loader: require.resolve('sass-loader'),
-          },
-        ],
       },
     ],
   },
@@ -49,11 +27,17 @@ module.exports = {
     chunkFilename: 'static/js/[name].chunk.js',
   },
   devtool: 'cheap-module-source-map',
+  // externals: [nodeExternals()],
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: path.resolve(process.cwd(), 'public/index.html'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `'development'`,
+      },
     }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   template: path.resolve(process.cwd(), 'public/index.html'),
+    // }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
